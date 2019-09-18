@@ -35,32 +35,32 @@ function buildHelp(){
 }
 
 function buildAndMove() {
-echo -e "${Info_font_prefix}[INFO:]Begin to compile ${1} program ${Font_suffix} "
-remove $1
-echo -e "${Info_font_prefix}[INFO:]Clear File Done  ${Font_suffix} "
-GOOS=$1 GOARCH=amd64 go  build main.go
-echo -e "${Info_font_prefix}[INFO:]Build ${1} program done ${Font_suffix} "
-mkdir -p build/$1
-mkdir build/$1/conf
-echo -e "${Info_font_prefix}[INFO:]Create folder done ${Font_suffix} "
-if [ "$1"x = "windows"x ] ;then
-    mv main.exe build/$1/auxpi.exe
-    else
-    mv main build/$1/auxpi
-fi
+  echo -e "${Info_font_prefix}[INFO:]Begin to compile ${1} program ${Font_suffix} "
+  remove $1
+  echo -e "${Info_font_prefix}[INFO:]Clear File Done  ${Font_suffix} "
+  GOOS=$1 GOARCH=amd64 go  build main.go
+  echo -e "${Info_font_prefix}[INFO:]Build ${1} program done ${Font_suffix} "
+  mkdir -p build/$1
+  mkdir build/$1/conf
+  echo -e "${Info_font_prefix}[INFO:]Create folder done ${Font_suffix} "
+  if [ "$1"x = "windows"x ] ;then
+      mv main.exe build/$1/auxpi.exe
+      else
+      mv main build/$1/auxpi
+  fi
 
-cp -r static/ build/$1/static/
-cp -r views/ build/$1/views/
-cp -r conf/app.conf build/$1/conf/
+  cp -r static/ build/$1/static/
+  cp -r views/ build/$1/views/
+  cp -r conf/app.conf build/$1/conf/
 
-cp LICENSE build/$1/
-cp README.MD build/$1/
+  cp LICENSE build/$1/
+  cp README.MD build/$1/
 
-echo -e "${Info_font_prefix}[INFO:]Copy file done ${Font_suffix} "
-echo -e "${Info_background_prefix}[INFO:]Done all work! : ) ${Font_suffix} "
-echo -e "#======================================================#"
+  echo -e "${Info_font_prefix}[INFO:]Copy file done ${Font_suffix} "
+  echo -e "${Info_background_prefix}[INFO:]Done all work! : ) ${Font_suffix} "
+  echo -e "#======================================================#"
 
-echo -e "${Info_font_prefix}[SUCCESS:]Your can see your ${1} program in 'build/${1}' ${Font_suffix} "
+  echo -e "${Info_font_prefix}[SUCCESS:]Your can see your ${1} program in 'build/${1}' ${Font_suffix} "
 
 }
 

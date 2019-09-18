@@ -23,3 +23,5 @@ require (
 	gopkg.in/masci/flickr.v2 v2.0.0-20161216033441-3cc496dc15cd
 	gopkg.in/yaml.v2 v2.2.2
 )
+
+go 1.13

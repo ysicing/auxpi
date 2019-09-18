@@ -1,6 +1,7 @@
 auxpi
 auxpi.tar.gz
 siteConfig.conf
+siteConfig.json
 *.lock
 *.tmp
 .idea

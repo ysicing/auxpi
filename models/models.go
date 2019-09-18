@@ -11,7 +11,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	//_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 var db *gorm.DB
@@ -49,11 +49,17 @@ func init() {
 	host = bootstrap.SiteConfig.DbOption.DbHost
 	tablePrefix = bootstrap.SiteConfig.DbOption.TablePrefix
 
-	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
-		user,
-		password,
-		host,
-		dbName))
+	if dbType == "mysql" {
+		db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
+			user,
+			password,
+			host,
+			dbName))
+	} else {
+		db, err = gorm.Open("sqlite3","db/auxpi.db")
+	}
+
+
 
 	if err != nil {
 		log.Println(db)

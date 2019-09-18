@@ -111,6 +111,7 @@ func init() {
 		user   string
 		pass   string
 		email  string
+		dbType string
 		dbName string
 		dbUser string
 		dbPass string
@@ -120,6 +121,7 @@ func init() {
 	flag.StringVar(&pass, "pass", "admin-pass", "Admin PassWord")
 	flag.StringVar(&email, "email", "auxpi@0w0.tn", "Admin Email")
 	flag.StringVar(&mod, "mod", "", "Choose Module")
+	flag.StringVar(&dbType, "dbType", "sqlite3", "dataBase Type")
 	flag.StringVar(&dbName, "dbName", "auxpi", "dataBase Name")
 	flag.StringVar(&dbUser, "dbUser", "root", "dataBase UserName")
 	flag.StringVar(&dbPass, "dbPass", "root", "dataBase PassWord")
@@ -135,15 +137,19 @@ func init() {
 		models.RegisterAdmin(user, utils.GetSha256CodeWithSalt(pass), t, email)
 		fmt.Println("\033[32m[INFO]:\033[0m Create Admin SUCCESS")
 	case "migrate":
-		if dbName == "" && dbUser == "" && dbPass == "" {
-			fmt.Println("\033[31m[ERROR]:\033" + "dbName,dbUser,dbPass can't be empty")
-			return
+		// 数据库为mysql
+		if dbType == "mysql" {
+			if len(dbName) == 0 || len(dbUser) == 0 || len(dbPass) == 0 {
+				fmt.Println("\033[31m[ERROR]:\033" + "dbName,dbUser,dbPass can't be empty")
+				return
+			}
 		}
 
 		options := bootstrap.SiteConfig
 		options.DbOption.DbName = dbName
 		options.DbOption.DbUser = dbUser
 		options.DbOption.DbPass = dbPass
+		options.DbOption.DbType = dbType
 		beego.Alert(dbPass, dbUser, dbName)
 		err := bootstrap.ReGenerateByInput(*options)
 		if err != nil {
